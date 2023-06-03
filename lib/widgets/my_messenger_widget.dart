@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:synergy/constants/app_constants.dart';
 
 class PostWidget extends StatelessWidget {
   final VoidCallback onUploadPressed;
@@ -26,7 +27,7 @@ class PostWidget extends StatelessWidget {
                 controller: controller,
                 maxLines: null,
                 decoration: InputDecoration(
-                  hintText: 'What is on your mind?...',
+                  hintText: AppConstants.postWidgetHint,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

@@ -4,7 +4,7 @@ class CommentButton extends StatelessWidget {
   final VoidCallback onTap;
   final int numOfComments;
 
-  CommentButton({required this.onTap, required this.numOfComments});
+  CommentButton({super.key, required this.onTap, required this.numOfComments});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +12,8 @@ class CommentButton extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          Icon(Icons.comment),
-          SizedBox(width: 4),
+          const Icon(Icons.comment),
+          const SizedBox(width: 4),
           Text('$numOfComments'),
         ],
       ),

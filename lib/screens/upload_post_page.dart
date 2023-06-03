@@ -5,7 +5,7 @@ import 'package:synergy/Helpers/logger.dart';
 import 'package:synergy/constants/app_constants.dart';
 
 import '../Helpers/helper.dart';
-import '../widgets/modern_button.dart';
+import '../widgets/buttons_widgets/modern_button.dart';
 import '../widgets/my_dropdown_menu.dart';
 
 class UploadPost extends StatefulWidget {

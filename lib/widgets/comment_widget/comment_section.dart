@@ -1,32 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:synergy/widgets/my_post_widget.dart';
-
-import '../Helpers/helper.dart';
+import 'package:synergy/widgets/my_messenger_widget.dart';
+import '../../Helpers/helper.dart';
+import '../../models/FirestoreServiceModel.dart';
 import 'comment_widget.dart';
 
 class CommentSection extends StatelessWidget {
   final String postId;
   TextEditingController commentController = TextEditingController();
-  final currentUser = FirebaseAuth.instance.currentUser!;
+  final FirestoreServiceModel firestoreServiceModel = FirestoreServiceModel();
 
-  CommentSection({super.key, required this.postId});
+  CommentSection({Key? key, required this.postId});
 
   void onUploadPressed() {
-    if (commentController.text.isNotEmpty) {
-      FirebaseFirestore.instance
-          .collection("posts")
-          .doc(postId)
-          .collection("Comments")
-          .add({
-        'UserEmail': currentUser.email,
-        'Message': commentController.text,
-        'Timestamp': Timestamp.now(),
-      });
+    final message = commentController.text;
+    try {
+      firestoreServiceModel.addComment(postId, message);
       commentController.clear();
-    } else {
-      Helper.showToast("Post is empty");
+    } catch (e) {
+      Helper.showToast(e.toString());
     }
   }
 
@@ -49,14 +41,7 @@ class CommentSection extends StatelessWidget {
           const Divider(),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("posts")
-                  .doc(postId)
-                  .collection("Comments")
-                  .orderBy('Timestamp',
-                      descending:
-                          true) // 'Comments' is a sub collection within the post document
-                  .snapshots(),
+              stream: firestoreServiceModel.getComments(postId),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final comments = snapshot.data!.docs;
@@ -95,7 +80,9 @@ class CommentSection extends StatelessWidget {
             ),
           ),
           PostWidget(
-              onUploadPressed: onUploadPressed, controller: commentController),
+            onUploadPressed: onUploadPressed,
+            controller: commentController,
+          ),
           SizedBox(
             height: 20,
           )

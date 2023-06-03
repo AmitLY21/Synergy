@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:synergy/Helpers/password_validator.dart';
-import 'package:synergy/widgets/my_button.dart';
+import 'package:synergy/widgets/buttons_widgets/my_button.dart';
 import 'package:synergy/widgets/my_text_field.dart';
 import '../Helpers/email_validator.dart';
 import '../Helpers/helper.dart';

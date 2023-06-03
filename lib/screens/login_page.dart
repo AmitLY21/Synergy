@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:synergy/constants/app_constants.dart';
-import 'package:synergy/widgets/my_button.dart';
+import 'package:synergy/widgets/buttons_widgets/my_button.dart';
 import 'package:synergy/widgets/my_header_widget.dart';
 import 'package:synergy/widgets/my_text_field.dart';
 import '../Helpers/helper.dart';

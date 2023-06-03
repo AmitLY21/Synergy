@@ -1,40 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:http/http.dart';
-import 'package:synergy/constants/app_constants.dart';
-import 'package:synergy/widgets/report_section.dart';
-
-import '../Helpers/logger.dart';
-import '../screens/view_user_profile_page.dart';
+import '../../constants/app_constants.dart';
+import '../../models/FirestoreServiceModel.dart';
+import '../../screens/view_user_profile_page.dart';
+import '../report_section.dart';
 
 class CommentItem extends StatelessWidget {
   final Map<String, dynamic> comment;
   final String postID;
   final String commentId;
-  List<SlidableAction> slidableActions = [];
+  final FirestoreServiceModel firestoreServiceModel = FirestoreServiceModel();
 
-  CommentItem(
-      {required this.comment, required this.postID, required this.commentId});
-
-  final currentUser = FirebaseAuth.instance.currentUser!;
+  CommentItem({super.key,
+    required this.comment,
+    required this.postID,
+    required this.commentId,
+  });
 
   void deleteComment() {
-    DocumentReference commentRef = FirebaseFirestore.instance
-        .collection('posts')
-        .doc(postID)
-        .collection('Comments')
-        .doc(commentId);
-    commentRef
-        .delete()
-        .then((res) =>
-            LoggerUtil.log().d("The post: $commentRef deleted successfully!"))
-        .catchError((error) =>
-            LoggerUtil.log().d('Delete for post $commentRef failed: $error'));
+    firestoreServiceModel.deleteComment(postID, commentId);
   }
 
-  void reportComment(BuildContext context, String reportId){
+  void reportComment(BuildContext context, String reportId) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -43,6 +30,16 @@ class CommentItem extends StatelessWidget {
           reportId: reportId,
         );
       },
+    );
+  }
+
+  void viewUserProfile(BuildContext context) {
+    final userEmail = comment['UserEmail'];
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ViewUserProfilePage(userEmail),
+      ),
     );
   }
 
@@ -55,7 +52,7 @@ class CommentItem extends StatelessWidget {
           onPressed: (context) {
             deleteComment();
           },
-          backgroundColor: Color(0xFFFE4A49),
+          backgroundColor: const Color(0xFFFE4A49),
           foregroundColor: Colors.white,
           icon: Icons.delete,
           label: 'Delete',
@@ -65,7 +62,7 @@ class CommentItem extends StatelessWidget {
       slidableActions.addAll([
         SlidableAction(
           onPressed: (context) {
-            reportComment(context,commentId);
+            reportComment(context, commentId);
           },
           backgroundColor: Color(0xFFFE4A49),
           foregroundColor: Colors.white,
@@ -74,8 +71,7 @@ class CommentItem extends StatelessWidget {
         ),
         SlidableAction(
           onPressed: (context) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ViewUserProfilePage(comment['UserEmail'])));
+            viewUserProfile(context);
           },
           backgroundColor: Color(0xFF50C878),
           foregroundColor: Colors.white,
@@ -88,16 +84,17 @@ class CommentItem extends StatelessWidget {
     return slidableActions;
   }
 
-
   @override
   Widget build(BuildContext context) {
-    bool isCurrentUserComment = currentUser.email == comment['UserEmail'];
-    slidableActions = buildSlidableActions(isCurrentUserComment);
+    final currentUserEmail = firestoreServiceModel.currentUser.email!;
+    final isCurrentUserComment = currentUserEmail == comment['UserEmail'];
+    final slidableActions = buildSlidableActions(isCurrentUserComment);
+
     return Slidable(
       key: const ValueKey(0),
       startActionPane: ActionPane(
         motion: const ScrollMotion(),
-        children: slidableActions
+        children: slidableActions,
       ),
       child: ListTile(
         title: Text(comment['UserEmail']),

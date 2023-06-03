@@ -82,7 +82,7 @@ class _IssueChipsRowState extends State<IssueChipsRow> {
       label: Text(issue),
       selected: isSelected,
       onSelected: (isSelected) => onChipSelected(index, isSelected),
-      shape: StadiumBorder(
+      shape: const StadiumBorder(
         side: BorderSide(color: Colors.deepPurple),
       ),
     );

@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:synergy/Helpers/logger.dart';
 import 'package:synergy/constants/app_constants.dart';
-import 'package:synergy/widgets/my_button.dart';
+import 'package:synergy/widgets/buttons_widgets/my_button.dart';
 
-import '../widgets/my_post_view.dart';
+import '../widgets/post_widget/my_post_view.dart';
 import '../widgets/report_section.dart';
 
 class ViewUserProfilePage extends StatefulWidget {

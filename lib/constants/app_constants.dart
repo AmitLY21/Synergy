@@ -85,6 +85,7 @@ class AppConstants {
   static const String addPhotoButtonText = 'Add Photo';
   // Helper showToast string
   static const String postIsEmpty = 'Post is empty';
+  static const String userAnonymously = 'Anonymous User';
 
   // User Profile page
   // AppBar strings
@@ -128,6 +129,8 @@ class AppConstants {
     'Other'
   ];
 
+  // PostWidget
+  static const String postWidgetHint = 'What is on your mind?...';
   //Report Section Options
   static const String postReportType = 'post';
   static const String userReportType = 'user';

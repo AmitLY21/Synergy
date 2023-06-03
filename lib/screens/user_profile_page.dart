@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:synergy/constants/app_constants.dart';
-import 'package:synergy/widgets/my_post_view.dart';
+import 'package:synergy/widgets/post_widget/my_post_view.dart';
 
 import '../widgets/edit_dialog.dart';
 

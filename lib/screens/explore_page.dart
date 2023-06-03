@@ -5,7 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:synergy/Helpers/logger.dart';
 import 'package:synergy/constants/app_constants.dart';
 import '../widgets/chip_filter_issue.dart';
-import '../widgets/my_post_view.dart';
+import '../widgets/post_widget/my_post_view.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
