@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 class Helper {
   static final Helper _instance = Helper._internal();
@@ -46,6 +47,12 @@ class Helper {
       formattedDate = 'Just now';
     }
 
+    return formattedDate;
+  }
+
+  String formatPublishedDate(String publishedAt) {
+    DateTime parsedDate = DateTime.parse(publishedAt);
+    String formattedDate = DateFormat.yMMMMd().format(parsedDate);
     return formattedDate;
   }
 

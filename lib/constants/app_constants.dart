@@ -160,4 +160,6 @@ class AppConstants {
     'Violation of Terms of Service',
     'Privacy Invasion',
   ];
+
+  static const NEWS_API_KEY = 'f7f6e46e2edd43588a9bb51f7621d97a';
 }

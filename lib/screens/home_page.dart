@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     const NewsFeedPage(),
     const ExplorePage(),
     UploadPost(),
-    const OrganizationPage(),
+    OrganizationPage(),
     UserProfileScreen()
   ];
 
