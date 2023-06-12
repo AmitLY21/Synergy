@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Helper {
   static final Helper _instance = Helper._internal();
@@ -54,6 +55,15 @@ class Helper {
     DateTime parsedDate = DateTime.parse(publishedAt);
     String formattedDate = DateFormat.yMMMMd().format(parsedDate);
     return formattedDate;
+  }
+
+  void launch(String articleUrl) async {
+    Uri url = Uri.parse(articleUrl); // Convert the String URL to a Uri object
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $articleUrl';
+    }
   }
 
 }

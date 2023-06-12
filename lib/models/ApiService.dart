@@ -5,12 +5,9 @@ import 'package:http/http.dart' as http;
 
 
 class ApiService {
-  static const String _baseUrl =
-      'https://newsapi.org/v2/top-headlines?category=health&language=en';
-
   Future<List<Article>> getArticles() async {
     try {
-      final response = await http.get(Uri.parse('$_baseUrl&apiKey=${AppConstants.NEWS_API_KEY}'));
+      final response = await http.get(Uri.parse('${AppConstants.baseUrl}&apiKey=${AppConstants.NEWS_API_KEY}'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> json = jsonDecode(response.body);
 

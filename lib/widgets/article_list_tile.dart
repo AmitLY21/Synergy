@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../Helpers/helper.dart';
 import '../models/article.dart';
 import '../screens/article_page.dart';
@@ -12,9 +11,10 @@ Widget articleListTile(Article article, BuildContext context) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ArticlePage(
-            article: article,
-          ),
+          builder: (context) =>
+              ArticlePage(
+                article: article,
+              ),
         ),
       );
     },
@@ -67,12 +67,17 @@ Widget articleListTile(Article article, BuildContext context) {
                 Positioned(
                   bottom: 12.0,
                   right: 12.0,
-                  child: Chip(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    label: Text(
-                      article.source!.name!
+                  child: GestureDetector(
+                    onTap: () {
+                      Helper().launch(article.url!);
+                    },
+                    child: Chip(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      label: Text(
+                          article.source!.name!
+                      ),
                     ),
                   ),
                 ),

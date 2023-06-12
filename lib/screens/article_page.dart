@@ -49,13 +49,18 @@ class ArticlePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    article.source!.name!,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[700],
+                  GestureDetector(
+                    child: Text(
+                      article.source!.name!,
+                      style: const TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent,
+                      ),
                     ),
+                    onTap: () {
+                      Helper().launch(article.url!);
+                    },
                   ),
                   const SizedBox(height: 8.0),
                   Text(

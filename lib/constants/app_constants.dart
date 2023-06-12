@@ -161,5 +161,8 @@ class AppConstants {
     'Privacy Invasion',
   ];
 
+  //API Service
   static const NEWS_API_KEY = 'f7f6e46e2edd43588a9bb51f7621d97a';
+  static const String baseUrl =
+      'https://newsapi.org/v2/everything?q=mental-health&sortBy=popularity&language=en';
 }
