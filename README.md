@@ -4,8 +4,7 @@
 
 ![Logo](https://github.com/AmitLY21/Synergy/assets/62396197/52dd1ebe-4f9a-4e01-8574-a53b8d715c55)
 
-##### Synergy: Uniting individuals, amplifying connections, and
-unleashing the power of collective collaboration.
+##### Synergy: Uniting individuals, amplifying connections, and unleashing the power of collective collaboration.
 ## Features 🎉
 
 ### 🔒 Authentication
