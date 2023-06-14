@@ -1,8 +1,10 @@
 # 💡🚀 Welcome to Synergy! 🌟
 
-Synergy is not just another social sharing network app. It's a vibrant and supportive community where you can share your life experiences, seek support, and uplift others. Get ready to embark on a journey of connection, growth, and empowerment!
+##### Synergy is not just another social sharing network app. It's a vibrant and supportive community where you can share your life experiences, seek support, and uplift others. Get ready to embark on a journey of connection, growth, and empowerment!
 
-Synergy: Uniting individuals, amplifying connections, and
+![Logo](https://github.com/AmitLY21/Synergy/assets/62396197/52dd1ebe-4f9a-4e01-8574-a53b8d715c55)
+
+##### Synergy: Uniting individuals, amplifying connections, and
 unleashing the power of collective collaboration.
 ## Features 🎉
 
