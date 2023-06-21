@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:synergy/Helpers/logger.dart';
 import 'package:synergy/constants/app_constants.dart';
+import 'package:synergy/models/FirestoreServiceModel.dart';
 import 'package:synergy/widgets/buttons_widgets/my_button.dart';
 
 import '../widgets/post_widget/my_post_view.dart';
@@ -20,6 +21,7 @@ class ViewUserProfilePage extends StatefulWidget {
 class _ViewUserProfilePageState extends State<ViewUserProfilePage> {
   late Future<String> usernameFuture;
   late Future<String> userBioFuture;
+  final currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -30,7 +32,7 @@ class _ViewUserProfilePageState extends State<ViewUserProfilePage> {
 
   static Future<String> getUsernameFromFirestore(String user) async {
     final documentSnapshot =
-    await FirebaseFirestore.instance.collection('users').doc(user).get();
+        await FirebaseFirestore.instance.collection('users').doc(user).get();
 
     if (documentSnapshot.exists) {
       return documentSnapshot.data()!['username'];
@@ -41,13 +43,41 @@ class _ViewUserProfilePageState extends State<ViewUserProfilePage> {
 
   static Future<String> getUserBioFromFirestore(String user) async {
     final documentSnapshot =
-    await FirebaseFirestore.instance.collection('users').doc(user).get();
+        await FirebaseFirestore.instance.collection('users').doc(user).get();
 
     if (documentSnapshot.exists) {
       return documentSnapshot.data()!['bio'];
     } else {
       return 'Empty Bio';
     }
+  }
+
+  void sendFriendRequest() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.user)
+        .collection('requests')
+        .add({
+      'requestId': '${currentUser?.email}-${widget.user}',
+      'senderEmail': currentUser?.email,
+      'recipientEmail': widget.user,
+      'title': 'Friend Request',
+      'message': '${currentUser?.email} wants to be your friend.',
+    }).then((value) => LoggerUtil.log().d(
+              "${currentUser?.email} is adding ${widget.user} as a friend",
+            ));
+  }
+
+  Future<bool> checkIsFriend() async {
+    final currentUserEmail = currentUser?.email;
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.user)
+        .collection('friends')
+        .doc(currentUserEmail)
+        .get();
+
+    return snapshot.exists;
   }
 
   @override
@@ -182,13 +212,30 @@ class _ViewUserProfilePageState extends State<ViewUserProfilePage> {
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: MyButton(
-                buttonText: 'Add Friend',
-                onPressed: () {
-                  LoggerUtil.log().d(
-                    "${FirebaseAuth.instance.currentUser
-                        ?.email!} is adding ${widget.user} as a friend",
-                  );
+              child: FutureBuilder<bool>(
+                future: checkIsFriend(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final isFriend = snapshot.data!;
+                    final buttonText = isFriend ? 'Friends!' : 'Add Friend';
+
+                    return isFriend
+                        ? const Text(
+                      'Friends!',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    )
+                        : MyButton(
+                      buttonText: buttonText,
+                      onPressed: sendFriendRequest,
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
                 },
               ),
             ),

@@ -74,83 +74,89 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const HeaderWidget(
-                title: AppConstants.appTitle,
-                subtitle: AppConstants.appSubtitle),
-            const SizedBox(height: 50),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 36.0),
-              child: Column(
-                children: [
-                  MyTextField(
-                    hint: AppConstants.emailHint,
-                    controller: usernameTextFieldcontroller,
-                  ),
-                  const SizedBox(height: 16),
-                  MyTextField(
-                    hint: AppConstants.passwordHint,
-                    controller: passwordTextFieldcontroller,
-                    isSecured: true,
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: TextButton(
-                          onPressed: () {
-                            // Handle forgot password
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return ForgotPasswordDialog();
-                              },
-                            );                          },
-                          child: const Text(AppConstants.loginForgotPassword),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  MyButton(
-                    buttonText: AppConstants.loginButton,
-                    onPressed: () {
-                      signIn();
-                    },
-                  ),
-                ],
+        child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 100,
               ),
-            ),
-            const SizedBox(height: 50),
-            RichText(
-              text: TextSpan(
-                text: AppConstants.loginSignUp,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                ),
-                children: [
-                  TextSpan(
-                    text: AppConstants.loginSignUpLink,
-                    style: const TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16.0,
+              const HeaderWidget(
+                  title: AppConstants.appTitle,
+                  subtitle: AppConstants.appSubtitle),
+              const SizedBox(height: 50),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 36.0),
+                child: Column(
+                  children: [
+                    MyTextField(
+                      hint: AppConstants.emailHint,
+                      controller: usernameTextFieldcontroller,
                     ),
-                    recognizer: TapGestureRecognizer()..onTap = widget.onTap,
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    MyTextField(
+                      hint: AppConstants.passwordHint,
+                      controller: passwordTextFieldcontroller,
+                      isSecured: true,
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: TextButton(
+                            onPressed: () {
+                              // Handle forgot password
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ForgotPasswordDialog();
+                                },
+                              );
+                            },
+                            child: const Text(AppConstants.loginForgotPassword),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    MyButton(
+                      buttonText: AppConstants.loginButton,
+                      onPressed: () {
+                        signIn();
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 50),
-          ],
+              const SizedBox(height: 50),
+              RichText(
+                text: TextSpan(
+                  text: AppConstants.loginSignUp,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: AppConstants.loginSignUpLink,
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16.0,
+                      ),
+                      recognizer: TapGestureRecognizer()..onTap = widget.onTap,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 50),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-

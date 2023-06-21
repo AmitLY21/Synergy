@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -9,6 +10,8 @@ import 'package:synergy/widgets/my_drawer.dart';
 import 'package:synergy/screens/explore_page.dart';
 import 'package:synergy/screens/news_feed_page.dart';
 import 'package:synergy/screens/organization_page.dart';
+import 'package:badges/badges.dart' as badges;
+import 'notification_page.dart';
 
 final glbKey = GlobalKey();
 
@@ -39,20 +42,56 @@ class _HomePageState extends State<HomePage> {
     const NewsFeedPage(),
     const ExplorePage(),
     UploadPost(),
-    OrganizationPage(),
+    const OrganizationPage(),
     UserProfileScreen()
   ];
 
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> requestStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser!.email)
+        .collection('requests')
+        .snapshots();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppConstants.appTitle),
         bottom: PreferredSize(
-            preferredSize: Size.zero,
-            child: //Sign as
-                Text(currentUser.email!)),
-        actions: [Center(child: IconButton(onPressed: (){}, icon: const Icon(Ionicons.notifications )))],
+          preferredSize: Size.zero,
+          child: Text(currentUser!.email!),
+        ),
+        actions: [
+          Row(
+            children: [
+              StreamBuilder<QuerySnapshot>(
+                stream: requestStream,
+                builder: (context, snapshot) {
+                  int requestCount =
+                      snapshot.hasData ? snapshot.data!.docs.length : 0;
+                  return badges.Badge(
+                    badgeContent: Text(
+                      '$requestCount',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NotificationPage(),
+                          ),
+                        );
+                      },
+                      child: Icon(Ionicons.notifications),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(width: 24)
+            ],
+          ),
+        ],
       ),
       drawer: const MyDrawer(),
       body: _routes[_selectedIndex],
