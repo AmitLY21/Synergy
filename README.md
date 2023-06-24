@@ -23,8 +23,9 @@ Dive into the Explore page and filter posts by categories that resonate with you
 Ready to share your story? The Upload page allows you to create and publish your own posts. Choose a relevant category, express yourself authentically, and decide if you want to share anonymously.
 
 ### 🏢 Organization
-Looking for additional resources? Check out our Organization page (work in progress) to access informative articles and discover organizations that can provide valuable support.
-
+Looking for additional resources related to mental health? Our Organization page offers a curated list of organizations that provide valuable support and information. Each organization has its dedicated page with comprehensive details about their services, contact information, and more.
+In addition to the organizations, we also provide access to a collection of informative articles.</br>These articles focus specifically on mental health topics and are sourced from a dedicated news API that specializes in mental health news.
+Explore the Organization page to find the right support and gain insights from the articles to enhance your mental well-being.
 ### 👥 User Profile
 Your profile is a reflection of your journey. Customize it, share your bio, and showcase your posts. Connect with others, receive friend requests, and grow your network of support.
 ## Libraries Used 📚
