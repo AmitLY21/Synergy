@@ -86,6 +86,10 @@ class NotificationPage extends StatelessWidget {
             );
           }
 
+          if (!snapshot.hasData || snapshot.data == null || snapshot.data!.size == 0) {
+            return const Center(child: Text("No new notification..." , style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold),));
+          }
+
           final documents = snapshot.data!.docs;
 
           return ListView.builder(

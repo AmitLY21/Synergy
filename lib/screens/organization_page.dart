@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:synergy/screens/articles_tab.dart';
 
+import 'organizations_tab.dart';
+
 class OrganizationPage extends StatefulWidget {
   const OrganizationPage({Key? key}) : super(key: key);
 
@@ -48,7 +50,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
           ),
           body: const TabBarView(
             children: [
-              Icon(Icons.directions_car),
+              OrganizationTab(),
               ArticlesTab(),
             ],
           ),
