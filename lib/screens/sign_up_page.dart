@@ -91,76 +91,78 @@ class _SignUpPage extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const HeaderWidget(
-                title: AppConstants.appTitle,
-                subtitle: AppConstants.passwordReq),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 36.0),
-              child: Column(
-                children: [
-                  MyTextField(
-                    hint: AppConstants.emailHint,
-                    controller: emailTextFieldController,
-                  ),
-                  const SizedBox(height: 16),
-                  MyTextField(
-                    hint: AppConstants.passwordHint,
-                    controller: passwordTextFieldController,
-                    isSecured: true,
-                  ),
-                  const SizedBox(height: 16),
-                  MyTextField(
-                    hint: AppConstants.signUpConfirmPasswordHint,
-                    controller: confirmPasswordTextFieldController,
-                    isSecured: true,
-                  ),
-                  const SizedBox(height: 24),
-                  MyButton(
-                    buttonText: AppConstants.signUpButtonText,
-                    onPressed: () {
-                      // Handle sign up logic and checkPassword complexity
-                      if (EmailValidator.validate(emailTextFieldController.text)) {
-                        if (PasswordValidator.validate(passwordTextFieldController.text)) {
-                          signUp();
-                        } else {
-                          Fluttertoast.showToast(msg: AppConstants.passwordCheckerError);
-                        }
-                      } else {
-                        Fluttertoast.showToast(msg: AppConstants.invalidEmailError);
-                      }
-
-                    },
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 50),
-            RichText(
-              text: TextSpan(
-                text: AppConstants.signUpAlreadyHaveAccount,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                ),
-                children: [
-                  TextSpan(
-                    text: AppConstants.signUpLogIn,
-                    style: const TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16.0,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const HeaderWidget(
+                  title: AppConstants.appTitle,
+                  subtitle: AppConstants.passwordReq),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 36.0),
+                child: Column(
+                  children: [
+                    MyTextField(
+                      hint: AppConstants.emailHint,
+                      controller: emailTextFieldController,
                     ),
-                    recognizer: TapGestureRecognizer()..onTap = widget.onTap,
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    MyTextField(
+                      hint: AppConstants.passwordHint,
+                      controller: passwordTextFieldController,
+                      isSecured: true,
+                    ),
+                    const SizedBox(height: 16),
+                    MyTextField(
+                      hint: AppConstants.signUpConfirmPasswordHint,
+                      controller: confirmPasswordTextFieldController,
+                      isSecured: true,
+                    ),
+                    const SizedBox(height: 24),
+                    MyButton(
+                      buttonText: AppConstants.signUpButtonText,
+                      onPressed: () {
+                        // Handle sign up logic and checkPassword complexity
+                        if (EmailValidator.validate(emailTextFieldController.text)) {
+                          if (PasswordValidator.validate(passwordTextFieldController.text)) {
+                            signUp();
+                          } else {
+                            Fluttertoast.showToast(msg: AppConstants.passwordCheckerError);
+                          }
+                        } else {
+                          Fluttertoast.showToast(msg: AppConstants.invalidEmailError);
+                        }
+          
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 50),
-          ],
+              const SizedBox(height: 50),
+              RichText(
+                text: TextSpan(
+                  text: AppConstants.signUpAlreadyHaveAccount,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: AppConstants.signUpLogIn,
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16.0,
+                      ),
+                      recognizer: TapGestureRecognizer()..onTap = widget.onTap,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 50),
+            ],
+          ),
         ),
       ),
     );

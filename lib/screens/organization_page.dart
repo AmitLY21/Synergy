@@ -19,13 +19,13 @@ class _OrganizationPageState extends State<OrganizationPage> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            bottom: TabBar(
+            bottom: const TabBar(
               tabs: [
                 Tab(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(Icons.business_sharp),
                       SizedBox(width: 8),
                       Text('Organizations'),
@@ -36,7 +36,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const[
+                    children: [
                       Icon(Icons.article_outlined),
                       SizedBox(width: 8),
                       Text('Articles'),
