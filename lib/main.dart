@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:is_first_run/is_first_run.dart';
 import 'package:synergy/auth/auth.dart';
 import 'package:synergy/auth/login_or_register.dart';
-import 'package:synergy/screens/home_page.dart';
 import 'package:synergy/screens/user_profile_page.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:json_theme/json_theme.dart';
 import 'package:synergy/screens/on_boarding_page.dart';
+
+import 'models/AppsFlyerService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +20,8 @@ void main() async {
       await rootBundle.loadString('lib/assets/appainter_theme.json');
   final themeJson = jsonDecode(themeStr);
   final theme = ThemeDecoder.decodeThemeData(themeJson)!;
+  await dotenv.load(fileName: ".env");
+  AppsFlyerService appsFlyerService = AppsFlyerService();
 
   runApp(MyApp(theme: theme));
 }

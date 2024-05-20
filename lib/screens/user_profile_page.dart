@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:synergy/constants/app_constants.dart';
 import 'package:synergy/widgets/post_widget/my_post_view.dart';
 
+import '../models/AppsFlyerService.dart';
 import '../widgets/edit_dialog.dart';
 import 'friends_page.dart';
 
@@ -60,6 +60,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         FirebaseFirestore.instance.collection('users').doc(currentUser.email!);
 
     await userRef.update({'username': newUsername});
+    AppsFlyerService().logEvent("updateUsername",
+        {"lastUsername": currentUser.email!, "newUsername": newUsername});
   }
 
   void updateUserBio(String newBio) async {
@@ -78,12 +80,25 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppConstants.userProfileTitle),
-        actions: [Row(children: [IconButton(onPressed: (){Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FriendsPage(),
-          ),
-        );}, icon: Icon(Icons.people)) , SizedBox(width: 14,)],)],
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FriendsPage(),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.people)),
+              SizedBox(
+                width: 14,
+              )
+            ],
+          )
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

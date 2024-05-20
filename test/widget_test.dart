@@ -5,26 +5,45 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:synergy/main.dart';
+import 'package:synergy/Helpers/email_validator.dart';
+import 'package:synergy/Helpers/password_validator.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(theme: ThemeData(),));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  group('Password Validation Tests', () {
+    test('Empty password returns false', () {
+      expect(PasswordValidator.validate(''), false);
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    test('Valid password returns true', () {
+      expect(PasswordValidator.validate('Password123!'), true);
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test('Password without a number returns false', () {
+      expect(PasswordValidator.validate('Password!'), false);
+    });
+
+    test('Password without an uppercase letter returns false', () {
+      expect(PasswordValidator.validate('password123!'), false);
+    });
+  });
+
+  group('Email Validation Tests', () {
+    test('Empty email returns false', () {
+      expect(EmailValidator.validate(''), false);
+    });
+
+    test('Valid email returns true', () {
+      expect(EmailValidator.validate('email@test.com'), true);
+    });
+
+    test('Email without an "@" symbol returns false', () {
+      expect(EmailValidator.validate('emailtest.com'), false);
+    });
+
+    test('Email with multiple "@" symbols returns false', () {
+      expect(EmailValidator.validate('e@mail@test.com'), false);
+    });
   });
 }

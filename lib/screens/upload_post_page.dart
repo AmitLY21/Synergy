@@ -5,6 +5,7 @@ import 'package:synergy/Helpers/logger.dart';
 import 'package:synergy/constants/app_constants.dart';
 
 import '../Helpers/helper.dart';
+import '../models/AppsFlyerService.dart';
 import '../widgets/buttons_widgets/modern_button.dart';
 import '../widgets/my_dropdown_menu.dart';
 
@@ -31,8 +32,10 @@ class _UploadPostState extends State<UploadPost> {
         'issueType': selectedCategory
       }).then((success) => {
             LoggerUtil.log().d(
-                'Successfully uploaded ${currentUser.email} post: $postText , Anonymous: $isAnonymous , $success ')
-          });
+                'Successfully uploaded ${currentUser.email} post: $postText , Anonymous: $isAnonymous , $success '),
+            AppsFlyerService().logEvent("Upload Post", {"userEmail" : currentUser.email , "isAnonymous" : isAnonymous , "postID" : success.id })
+      });
+
       postController.clear();
     } else {
       Helper.showToast(AppConstants.postIsEmpty);

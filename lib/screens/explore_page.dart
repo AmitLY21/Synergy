@@ -44,40 +44,39 @@ class _ExplorePageState extends State<ExplorePage> {
 
   void handleSelectedChips(List<String> selectedChips) {
     DocumentReference userRef =
-        FirebaseFirestore.instance.collection('users').doc(currentUser?.email!);
+    FirebaseFirestore.instance.collection('users').doc(currentUser?.email!);
 
     // Get the current user issue types
     userRef.get().then((snapshot) {
       List<String> currentIssueTypes =
-          List<String>.from(snapshot.get('userIssueTypes') ?? []);
+      List<String>.from(snapshot.get('userIssueTypes') ?? []);
 
       // Remove existing issue types
       WriteBatch batch = FirebaseFirestore.instance.batch();
-      currentIssueTypes.forEach((issueType) {
+      for (var issueType in currentIssueTypes) {
         batch.update(userRef, {
           'userIssueTypes': FieldValue.arrayRemove([issueType])
         });
-      });
+      }
 
       // Add selected issue types
-      selectedChips.forEach((issueType) {
+      for (var issueType in selectedChips) {
         batch.update(userRef, {
           'userIssueTypes': FieldValue.arrayUnion([issueType])
         });
-      });
-
+      }
+      // Commit the batch update
       batch.commit().then((_) {
         setState(() {
           this.selectedChips = selectedChips;
         });
       }).catchError((error) {
-        // Handle the error if the update fails
-        LoggerUtil.log().d(AppConstants.failedToUpdateIssueTypesError + error);
+        // Ensure error is converted to String before concatenation
+        LoggerUtil.log().d(AppConstants.failedToUpdateIssueTypesError + error.toString());
       });
     }).catchError((error) {
-      // Handle the error if fetching the user document fails
-      LoggerUtil.log().d(AppConstants.failedToFetchUserDocumentError + error);
-
+      // Ensure error is converted to String before concatenation
+      LoggerUtil.log().d(AppConstants.failedToFetchUserDocumentError + error.toString());
     });
   }
 

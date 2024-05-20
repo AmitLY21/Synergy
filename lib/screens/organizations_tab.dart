@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:synergy/models/ApiService.dart';
 
+import '../models/AppsFlyerService.dart';
 import '../models/organization.dart';
 import '../widgets/organization_list_tile.dart';
 
@@ -19,6 +20,7 @@ class _OrganizationTabState extends State<OrganizationTab> {
   void initState() {
     super.initState();
     futureOrganizations = client.getOrganizations();
+    AppsFlyerService().logEvent("Open organization tab", {});
   }
 
   @override

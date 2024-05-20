@@ -5,6 +5,7 @@ import 'package:synergy/Helpers/logger.dart';
 import 'package:synergy/constants/app_constants.dart';
 import 'package:synergy/widgets/buttons_widgets/my_button.dart';
 
+import '../models/AppsFlyerService.dart';
 import '../widgets/post_widget/my_post_view.dart';
 import '../widgets/report_section.dart';
 
@@ -65,6 +66,8 @@ class _ViewUserProfilePageState extends State<ViewUserProfilePage> {
     }).then((value) => LoggerUtil.log().d(
               "${currentUser?.email} is adding ${widget.user} as a friend",
             ));
+    AppsFlyerService().logEvent("sendFriendRequest", {"senderEmail": currentUser?.email , "recipientEmail" : widget.user});
+
   }
 
   Future<bool> checkIsFriend() async {

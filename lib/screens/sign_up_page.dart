@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:synergy/Helpers/password_validator.dart';
+import 'package:synergy/models/AppsFlyerService.dart';
 import 'package:synergy/widgets/buttons_widgets/my_button.dart';
 import 'package:synergy/widgets/my_text_field.dart';
 import '../Helpers/email_validator.dart';
@@ -59,7 +60,10 @@ class _SignUpPage extends State<SignUpPage> {
         'userIssueTypes': [],
       });
 
-      if (context.mounted) Navigator.pop(context);
+      if (context.mounted){
+        Navigator.pop(context);
+        AppsFlyerService().logEvent("Sign-Up Successfully", {"User Email" : emailTextFieldController.text });
+      }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
 
@@ -82,7 +86,7 @@ class _SignUpPage extends State<SignUpPage> {
           errorMessage = 'An error occurred. Please try again.';
           break;
       }
-
+      AppsFlyerService().logEvent("Sign-Up Failed", {"User Email" : emailTextFieldController.text , "Error" : errorMessage});
       Helper.showToast(errorMessage);
     }
   }

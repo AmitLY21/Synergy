@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:synergy/Helpers/logger.dart';
 import 'package:synergy/constants/app_constants.dart';
+import 'package:synergy/models/AppsFlyerService.dart';
 import 'package:synergy/widgets/buttons_widgets/my_button.dart';
 import 'package:synergy/widgets/my_header_widget.dart';
 import 'package:synergy/widgets/my_text_field.dart';
@@ -35,13 +37,16 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context) => const Center(
               child: SpinKitSpinningLines(color: Colors.purple),
             ));
-    print("Sign in process");
+    LoggerUtil.log().d("Sign in process");
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: usernameTextFieldcontroller.text,
         password: passwordTextFieldcontroller.text,
       );
-      if (context.mounted) Navigator.pop(context);
+      if (context.mounted) {
+        AppsFlyerService().logEvent("Sign-In Successfully", {usernameTextFieldcontroller.text : "Date of login: ${DateTime.now()}"});
+        Navigator.pop(context);
+      }
     } catch (e) {
       String errorMessage = 'An error occurred during sign in.';
 
@@ -66,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
       Navigator.pop(context);
+      AppsFlyerService().logEvent("Sign-In Failed", {usernameTextFieldcontroller.text : errorMessage});
       Helper.showToast(errorMessage);
     }
   }
@@ -80,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               const HeaderWidget(
